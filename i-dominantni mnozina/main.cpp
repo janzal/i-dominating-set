@@ -6,6 +6,7 @@
 #include <set>
 #include <stdlib.h>
 #include <stdio.h>
+#include <cstring>
 
 #define DEBUG 2
 #define INFO 1
@@ -18,7 +19,7 @@ unsigned int debugLevel = INFO;
 void Log (string & msg, unsigned int dbg){
     
     if(dbg <= debugLevel)
-        cout << setfill(' ') << setw(dbg) << msg << endl;
+        cout << msg << endl;
 }
 
 void Log (string & msg){
@@ -40,15 +41,15 @@ private:
     unsigned int m_level;
     unsigned int m_debugLevel;
     
-    Graph * graph;
+    Graph * m_graph;
 public:
-    Dominator(unsigned int level, Graph & graph){
+    Dominator(unsigned int level, Graph *graph){
         this->m_level = level;
         this->m_graph = graph;
     }
     
-    start(){
-        Log("Started", INFO);
+    void start(){
+        //Log("Started", INFO);
     }
 };
 
@@ -97,30 +98,30 @@ int main(int argc, char *argv[]) {
             }
         }
     }else{
-        Log("[-i,-d] <input_file> <i>");
+//        Log("[-i,-d] <input_file> <i>");
         return 1;
     }
     
-    Log("Debug level: " + debugLevel)
+//    Log("Debug level: " + debugLevel)
     
-    Graph graph;
+    Graph *graph = new Graph();
     
     char* fileName = argv[argc -2];
     
     if ( ! loadGraph(fileName, &graph)) {
-        Log("File " + fileName + " isnt valid or doesnt exist.")
+//        Log("File " + fileName + " isnt valid or doesnt exist.")
         return 1;
     }else{
-        Log("File" + fileName + " has been loaded.", INFO);
+//        Log("File" + fileName + " has been loaded.", INFO);
     }
     
     unsigned int level = atoi(argv[argc-1]);
     
     if (level < 0){
-        Log("Invalid level, use value > 0.");
+//        Log("Invalid level, use value > 0.");
         return 1;
     }else{
-        Log("Level (i-value) is set to: " + level, INFO);
+//        Log("Level (i-value) is set to: " + level, INFO);
     }
     
     Dominator dom(level, graph);
