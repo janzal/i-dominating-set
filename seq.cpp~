@@ -53,35 +53,42 @@ public:
 };
 
 
-bool loadGraph(char fileName[], Graph *graph)
-{
+bool loadFile(char fileName[], Graph &graph){
 	string line;
-	ifstream myfile (fileName);
-	if (myfile.is_open())
-	{
-		getline(myfile, line);
-		int graphSize = atoi(line.c_str());
-		vector< vector<bool> > matrix(graphSize, vector<bool>(graphSize, false));
-		vector< set<unsigned int> > neighbourhoodMap(graphSize);
-		int i = 0;
-		for (int var = 0; var < graphSize; ++var)
-		{
-			getline (myfile,line);
-			for(int j = 0; j < graphSize; ++j) {
-				if(line[j] == '1')	{
-					matrix[i][j] = true;
-				}
-			}
-			i++;
-		}
-		graph->size = graphSize;
-		graph->matrix = matrix;
-		graph->neighbourhoodMap = neighbourhoodMap;
-		myfile.close();
-		return true;
-	}
-	return false;
+﻿	ifstream myfile (fileName);
+﻿	if (myfile.is_open())
+﻿	{
+﻿	﻿	getline(myfile, line);
+		
+		// pocet radek
+﻿	﻿	int graphSize = atoi(line.c_str());
+		
+		// vyplni matici falsem
+﻿	﻿	vector< vector<bool> > matrix(graphSize, vector<bool>(graphSize, false));
+		
+		// init
+﻿	﻿	vector< set<unsigned int> > neighbourhoodMap(graphSize);
+
+﻿	﻿	int i = 0;
+﻿	﻿	for (int var = 0; var < graphSize; ++var)
+﻿	﻿	{
+﻿	﻿	﻿	getline (myfile,line);
+﻿	﻿	﻿	for(int j = 0; j < graphSize; ++j) {
+﻿	﻿	﻿	﻿	if(line[j] == '1')﻿	{
+﻿	﻿	﻿	﻿	﻿	matrix[i][j] = true;
+﻿	﻿	﻿	﻿	}
+﻿	﻿	﻿	}
+﻿	﻿	﻿	i++;
+﻿	﻿	}
+﻿	﻿	graph->size = graphSize;
+﻿	﻿	graph->matrix = matrix;
+﻿	﻿	graph->neighbourhoodMap = neighbourhoodMap;
+﻿	﻿	myfile.close();
+﻿	﻿	return true;
+﻿	}
+﻿	return false;
 }
+
 
 
 
