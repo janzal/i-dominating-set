@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
     
     char* fileName = argv[argc -2];
     
-    if ( ! loadGraph(fileName, &graph)) {
+    if ( ! loadGraph(fileName, graph)) {
 //        Log("File " + fileName + " isnt valid or doesnt exist.")
         return 1;
     }else{
