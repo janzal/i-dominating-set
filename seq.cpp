@@ -18,7 +18,7 @@ unsigned int debugLevel = INFO;
 void Log (string & msg, unsigned int dbg){
 
 	if(dbg <= debugLevel)
-		cout << setfill(' ') << setw(level) << msg << endl;
+		cout << setfill(' ') << setw(dbg) << msg << endl;
 }
 
 void Log (string & msg){

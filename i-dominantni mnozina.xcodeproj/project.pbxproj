@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FA01FBD19F7C7DF00DB10E6 /* ref_seq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */; };
+		2FA01FBE19F7C7DF00DB10E6 /* seq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */; };
+		2FA01FBF19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */; };
 		2FBFB51C19F7A93500A5AA36 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FBFB51B19F7A93500A5AA36 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -23,6 +26,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ref_seq.cpp; sourceTree = SOURCE_ROOT; };
+		2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = seq.cpp; sourceTree = SOURCE_ROOT; };
+		2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SequentialAlgorithm.cpp; sourceTree = SOURCE_ROOT; };
 		2FBFB51819F7A93500A5AA36 /* i-dominantni mnozina */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "i-dominantni mnozina"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FBFB51B19F7A93500A5AA36 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,6 +63,9 @@
 		2FBFB51A19F7A93500A5AA36 /* i-dominantni mnozina */ = {
 			isa = PBXGroup;
 			children = (
+				2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */,
+				2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */,
+				2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */,
 				2FBFB51B19F7A93500A5AA36 /* main.cpp */,
 			);
 			path = "i-dominantni mnozina";
@@ -118,7 +127,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FA01FBE19F7C7DF00DB10E6 /* seq.cpp in Sources */,
 				2FBFB51C19F7A93500A5AA36 /* main.cpp in Sources */,
+				2FA01FBF19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp in Sources */,
+				2FA01FBD19F7C7DF00DB10E6 /* ref_seq.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +244,7 @@
 				2FBFB52119F7A93500A5AA36 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
