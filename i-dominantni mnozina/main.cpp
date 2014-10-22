@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstring>
+#include <string.h>
 
 #define DEBUG 2
 #define INFO 1
@@ -93,7 +94,7 @@ int main(int argc, char *argv[]) {
         if(argc == 4){
             if (strcmp(argv[1], "-i") == 1){
                 debugLevel = INFO;
-            }elseif (strcmp(argv[1]), "-d") == 1 {
+            }else if (strcmp(argv[1], "-d") == 1) {
                 debugLevel = DEBUG;
             }
         }
