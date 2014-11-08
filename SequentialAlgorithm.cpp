@@ -6,7 +6,7 @@
  ============================================================================
  */
 
-#include "mpi.h" 
+//#include "mpi.h" 
 #include <iostream>
 #include <fstream>
 #include <string>

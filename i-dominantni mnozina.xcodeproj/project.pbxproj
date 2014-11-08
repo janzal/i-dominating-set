@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FA01FBD19F7C7DF00DB10E6 /* ref_seq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */; };
-		2FA01FBE19F7C7DF00DB10E6 /* seq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */; };
-		2FA01FBF19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */; };
 		2FBFB51C19F7A93500A5AA36 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FBFB51B19F7A93500A5AA36 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +44,7 @@
 		2FBFB50F19F7A93500A5AA36 = {
 			isa = PBXGroup;
 			children = (
+				2FD065761A09519A0078053C /* ideas */,
 				2FBFB51A19F7A93500A5AA36 /* i-dominantni mnozina */,
 				2FBFB51919F7A93500A5AA36 /* Products */,
 			);
@@ -63,12 +61,28 @@
 		2FBFB51A19F7A93500A5AA36 /* i-dominantni mnozina */ = {
 			isa = PBXGroup;
 			children = (
-				2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */,
-				2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */,
-				2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */,
 				2FBFB51B19F7A93500A5AA36 /* main.cpp */,
 			);
 			path = "i-dominantni mnozina";
+			sourceTree = "<group>";
+		};
+		2FD065751A0951470078053C /* inspiration */ = {
+			isa = PBXGroup;
+			children = (
+				2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */,
+				2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */,
+				2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */,
+			);
+			name = inspiration;
+			path = "i-dominantni mnozina";
+			sourceTree = "<group>";
+		};
+		2FD065761A09519A0078053C /* ideas */ = {
+			isa = PBXGroup;
+			children = (
+				2FD065751A0951470078053C /* inspiration */,
+			);
+			name = ideas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,10 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FA01FBE19F7C7DF00DB10E6 /* seq.cpp in Sources */,
 				2FBFB51C19F7A93500A5AA36 /* main.cpp in Sources */,
-				2FA01FBF19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp in Sources */,
-				2FA01FBD19F7C7DF00DB10E6 /* ref_seq.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
