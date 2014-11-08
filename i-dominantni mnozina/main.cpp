@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <memory>
 #include <set>
@@ -47,10 +48,10 @@ public:
     unsigned int level;
     
     // matice sousednosti
-    vector<vector<bool>> matrix;
+    vector<vector<bool> > matrix;
 
     // mapa sousedu
-    vector<set<unsigned int>> neighbourhoodMap;
+    vector<set<unsigned int> > neighbourhoodMap;
 
     // konstruktor
     Graph(unsigned int level){
@@ -83,14 +84,15 @@ public:
 
             // no neighbourhood has been generated?
             if (this->neighbourhoodMap[set[i]].empty()){
-                // init set 
-                set<unsigned int> neighbourhood;
+                // init empty set
+                int i = 0;
+                set<unsigned int> nbh = set<unsigned int>;
 
                 // fill set with nodes (with distance <= this->level from set[i])
-                this->exploreNode(&neighbourhood, set[i], this->level);
+                this->exploreNode(&nbh, set[i], this->level);
 
                 // set new neighbourhood
-                this->neighbourhoodMap = neighbourhood;
+                this->neighbourhoodMap = nbh;
             }
 
             // TODO -> refactor
@@ -103,7 +105,7 @@ public:
         // check coverage of the graph
         for (unsigned int i = 0; i < this->size; i++){
             // first fail -> whole graph isnt covered
-            if (ok[i] == false) return false
+            if (ok[i] == false) return false;
         }
         return true;
     }
@@ -115,8 +117,8 @@ class Dominator {
 private:
     unsigned int m_level;
     unsigned int m_debugLevel;
-    vector<vector<unsigned int>> m_stack;
-    vector<unsigned int> m_result;
+    vector<vector<unsigned int> > * m_stack;
+    vector<unsigned int> * m_result;
     
     Graph * m_graph;
 
@@ -125,13 +127,13 @@ private:
         // outer vector consists of vectors
         // inner vectors consists of vectors of size 1 and filled with zeroes
         Log("initializing stack...", DEBUG);
-        this->m_stack = new vector<vector<unsigned int>>(graph.size, vector<unsigned int>(1, 0));
+        this->m_stack = new vector<vector<unsigned int> >(this->m_graph->size, vector<unsigned int>(1, 0));
 
         // Fill stack with all nodes of the graph
         unsigned int i = 0;
-        while (i < this->m_graph.size()){
+        while (i < this->m_graph->size){
             vector<unsigned int> singleNode(1,i);
-            this->m_stack.push_back(singleNode);
+            this->m_stack->push_back(singleNode);
             i++;
         }
         Log("\tdone", DEBUG);
@@ -139,12 +141,12 @@ private:
 
     void initResult() {
         Log("initializing result vector...", DEBUG);
-        this->m_results = new vector<unsigned int>(this->m_graph.size() + 1);
+        this->m_result = new vector<unsigned int>(this->m_graph->size + 1);
         Log("\tdone", DEBUG);
     }
 
     void analyzeResult(vector<unsigned int> & result){
-        if (result.size() < this->m_result.size() && this->coversGraph(result))
+        //if (result.size() < this->m_result.size() && this->coversGraph(result))
     }
 public:
     Dominator(unsigned int level, Graph *graph){
@@ -152,15 +154,15 @@ public:
         this->m_graph = graph;
 
         this->initStack();
-        this->initResults();
+        this->initResult();
     }
     
     void start(){
         Log("*** 666 > DOMINATOR HAS BEEN RELEASED < 666 ***", INFO);
 
-        while ( this->m_stack.empty() == false){
-            vector<unsigned int> currResult = this->m_stack.back();
-            this->m_stack.pop_back();
+        while ( this->m_stack->empty() == false){
+            vector<unsigned int> currResult = this->m_stack->back();
+            this->m_stack->pop_back();
 
             this->analyzeResult(currResult);
         }
