@@ -7,22 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F6D7DE31A111CF9004B6342 /* test.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2F6D7DE11A111BD4004B6342 /* test.txt */; };
 		2FBFB51C19F7A93500A5AA36 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FBFB51B19F7A93500A5AA36 /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		2FBFB51619F7A93500A5AA36 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				2F6D7DE31A111CF9004B6342 /* test.txt in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2F6D7DE11A111BD4004B6342 /* test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.txt; sourceTree = "<group>"; };
 		2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ref_seq.cpp; sourceTree = SOURCE_ROOT; };
 		2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = seq.cpp; sourceTree = SOURCE_ROOT; };
 		2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SequentialAlgorithm.cpp; sourceTree = SOURCE_ROOT; };
@@ -61,6 +64,7 @@
 		2FBFB51A19F7A93500A5AA36 /* i-dominantni mnozina */ = {
 			isa = PBXGroup;
 			children = (
+				2F6D7DE11A111BD4004B6342 /* test.txt */,
 				2FBFB51B19F7A93500A5AA36 /* main.cpp */,
 			);
 			path = "i-dominantni mnozina";
