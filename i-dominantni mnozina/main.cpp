@@ -62,7 +62,7 @@ public:
         Solver *solver = new Solver();
         solver->graph->level = level;
         
-        clog << "Loading graph: " << fileName << endl;
+        clog << "Nacitam graf: " << fileName << endl;
         
         string line;
         ifstream myfile (fileName);
@@ -88,8 +88,8 @@ public:
             solver->graph->nbhMap = neighbourhoodMap;
             myfile.close();
             
-            clog << "Graph loaded from file: " << fileName << endl;
-            clog << "Graph size: " << solver->graph->size << endl;
+            clog << "Graf nacten ze souboru: " << fileName << endl;
+            clog << "Velikost grafu: " << solver->graph->size << endl;
             clog << "i = " << level << endl << endl;
 
             return solver;
@@ -106,7 +106,7 @@ public:
             vector<unsigned int> partialResult(1, i);
             stack.push_back(partialResult);
         }
-        cout << "Search started...\n\n";
+        cout << "Hledani zacalo...\n\n";
         //hlavni cyklus, prochazi zasobnik
         while (!stack.empty()) {
             vector<unsigned int> partialResult = stack.back();
@@ -114,16 +114,16 @@ public:
             //otestuj castecne reseni
             if (partialResult.size() < result.size() && this->testPartialResult(partialResult)) {
                 result = partialResult;
-                this->printVector(partialResult,"Solution found : ");
+                this->printVector(partialResult,"Reseni nalezeno: ");
             } else if (partialResult.size() < (result.size() - 1)) {
                 //expanduj castecne reseni tehdy ma-li to smysl
                 this->expandStack(expandPartialResult(partialResult), stack);
-                this->printVector(partialResult,"Trying: ");
+                this->printVector(partialResult,"Zkousim: ");
             }
         }
         
-        printVector(result,"\nOne of the best solutions: ");
-        cout << "Size of best solution: " << result.size() << "\n";
+        printVector(result,"\nJedno z nejlepsich reseni: ");
+        cout << "Velikost nejlepsiho reseni: " << result.size() << "\n";
 
     }
     
@@ -233,12 +233,12 @@ int main(int argc, char *argv[]) {
         if (level > 0) {
             solver = Solver::loadGraph(fileName, level);
         } else {
-            cerr << "i-value is not valid!" << endl;
+            cerr << "i neni platne" << endl;
             return 1;
         }
         
         if (!solver) {
-            cerr << "Graph is not valid" << endl;
+            cerr << "Graf neni validni" << endl;
             return 1;
         }
         
@@ -246,6 +246,6 @@ int main(int argc, char *argv[]) {
         return 0;
         
     }
-    cout << "Usage:" << endl << "<graph_file> <i>" << endl;
+    cout << "Pouziti:" << endl << "<graph_file> <i>" << endl;
     return 0;
 }
