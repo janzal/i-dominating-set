@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2FA01FBD19F7C7DF00DB10E6 /* ref_seq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBA19F7C7DF00DB10E6 /* ref_seq.cpp */; };
-		2FA01FBE19F7C7DF00DB10E6 /* seq.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBB19F7C7DF00DB10E6 /* seq.cpp */; };
-		2FA01FBF19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FA01FBC19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp */; };
 		2FBFB51C19F7A93500A5AA36 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2FBFB51B19F7A93500A5AA36 /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -127,10 +124,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2FA01FBE19F7C7DF00DB10E6 /* seq.cpp in Sources */,
 				2FBFB51C19F7A93500A5AA36 /* main.cpp in Sources */,
-				2FA01FBF19F7C7DF00DB10E6 /* SequentialAlgorithm.cpp in Sources */,
-				2FA01FBD19F7C7DF00DB10E6 /* ref_seq.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

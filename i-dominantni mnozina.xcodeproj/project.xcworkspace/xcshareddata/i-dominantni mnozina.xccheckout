@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E4241E74-3AB1-4F3C-A506-F2DBB7EB4D73</string>
+	<key>IDESourceControlProjectName</key>
+	<string>i-dominantni mnozina</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D372FA518F2E01E9B50B9AB051DD02B07CAD47CC</key>
+		<string>https://github.com/janzal/i-dominating-set.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>i-dominantni mnozina.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D372FA518F2E01E9B50B9AB051DD02B07CAD47CC</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/janzal/i-dominating-set.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D372FA518F2E01E9B50B9AB051DD02B07CAD47CC</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D372FA518F2E01E9B50B9AB051DD02B07CAD47CC</string>
+			<key>IDESourceControlWCCName</key>
+			<string>i-dominantni%20mnozina</string>
+		</dict>
+	</array>
+</dict>
+</plist>
