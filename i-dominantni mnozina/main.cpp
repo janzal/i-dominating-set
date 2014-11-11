@@ -90,8 +90,8 @@ public:
                 }
                 i++;
             }
-            solver->graph->size = graphSize;
             solver->graph->matrix = matrix;
+            solver->graph->size = graphSize;
 
             vector< set<unsigned int> > coveredArea(graphSize);
             solver->graph->coveredArea = coveredArea;
@@ -110,24 +110,32 @@ public:
         this->stack = vector< vector<unsigned int> >(this->graph->size, vector<unsigned int>(1, 0));
         vector<unsigned int> result(graph->size + 1);
         
-        //uvodni naplneni zasobniku
+        //uvodni naplneni zasobniku vsemi uzly
         for (unsigned int i = 0; i < graph->size; i++) {
+            // vektory o delce 1 s hodnotou id uzlu (tzn napr 0 1 2 3 4 5 6..)
             vector<unsigned int> partialResult(1, i);
+            // nasypeme do stacku
             this->stack.push_back(partialResult);
         }
+        clog << "Stack inicializovan:" << endl;
+        this->printStack("");
         cout << "Hledani zacalo...\n\n";
-        //hlavni cyklus, prochazi zasobnik
+        // prochazime zasobnik dokud ho nevyprazdnime
         while (!this->stack.empty()) {
+            // vytahneme nejakou mnozinu nodes ze stacku
             vector<unsigned int> nodes = this->stack.back();
             this->stack.pop_back();
-            //otestuj castecne reseni
+            //otestujeme, zda aktualni mnozina ma mensi velikost nez nase nejlepsi reseni
+            //a zaroven pokryva cely graf
             if (nodes.size() < result.size() && this->isGraphCoveredBy(nodes)) {
                 // ok mame reseni
                 result = nodes;
+                // vytiskneme reseni
                 this->printVector(nodes,"Reseni nalezeno: ");
             } else if (nodes.size() < (result.size() - 1)) {
-                //expanduj castecne reseni tehdy ma-li to smysl
-                this->expandStack(expandPartialResult(nodes));
+                // ok tady este bude neco chybet, vyzkousej rozsirit aktualni nodes o dalsi uzly
+                // a pridej je na stack
+                this->expandStack(expandNodes(nodes));
                 this->printVector(nodes,"res: ");
             }
         }
@@ -142,7 +150,7 @@ private:
     vector< vector<unsigned int> > stack;
     
 
-    vector< vector<unsigned int> > expandPartialResult(vector<unsigned int> nodes) {
+    vector< vector<unsigned int> > expandNodes(vector<unsigned int> nodes) {
         unsigned int max = 0;
         //najdi uzel s maximalnim id v nodes
         for (unsigned int i = 0; i < nodes.size(); i++) {
@@ -209,12 +217,12 @@ private:
     /*
         Vlozime do stacku dalsi mozne reseni
     */
-    void expandStack(vector< vector<unsigned int> > expandedPartialResult) {
+    void expandStack(vector< vector<unsigned int> > expandedNodes) {
 
         clog << "  Exanding stack from:" << endl;
         this->printStack("    ");
-        for (unsigned int i = 0; i < expandedPartialResult.size(); i++) {
-            this->stack.push_back(expandedPartialResult[i]);
+        for (unsigned int i = 0; i < expandedNodes.size(); i++) {
+            this->stack.push_back(expandedNodes[i]);
         }
 
         clog << "  To:" << endl;
