@@ -118,7 +118,7 @@ public:
             } else if (partialResult.size() < (result.size() - 1)) {
                 //expanduj castecne reseni tehdy ma-li to smysl
                 this->expandStack(expandPartialResult(partialResult), stack);
-                this->printVector(partialResult,"Zkousim: ");
+                this->printVector(partialResult,"-> ");
             }
         }
         
@@ -165,27 +165,31 @@ private:
      * @param expandedPartialResult Rozsirene castecne reseni
      * @param stack Reference na globalni zasobnik
      */
-    void expandStack(vector< vector<unsigned int> > expandedPartialResult, vector< vector<unsigned int> >& stack) {
+    void expandStack(vector< vector<unsigned int> > expandedPartialResult, vector< vector<unsigned int> > &stack) {
         for (unsigned int i = 0; i < expandedPartialResult.size(); i++) {
             stack.push_back(expandedPartialResult[i]);
         }
     }
 
     bool testPartialResult(vector<unsigned int> partialResult) {
-        bool ok[this->graph->size];
+        bool isset[this->graph->size];
+        
         for (unsigned int i = 0; i < partialResult.size(); ++i) {
             if (this->graph->nbhMap[partialResult[i]].empty()) {
                 set<unsigned int> neighbourhood;
                 this->expandNode(&neighbourhood, partialResult[i], this->graph  ->level);
                 this->graph->nbhMap[partialResult[i]] = neighbourhood;
             }
-            set<unsigned int>::iterator theIterator;
-            for(theIterator = graph->nbhMap[partialResult[i]].begin(); theIterator != graph->nbhMap[partialResult[i]].end(); theIterator++ ) {
-                ok[*theIterator] = true;
+            set<unsigned int>::iterator it;
+            for(it = graph->nbhMap[partialResult[i]].begin();
+                it != graph->nbhMap[partialResult[i]].end();
+                it++ ) {
+                isset[*it] = true;
             }
         }
+        
         for (unsigned int k = 0; k < graph->size; ++k) {
-            if (!ok[k]) return false;
+            if (!isset[k]) return false;
         }
         return true;
     }
@@ -203,11 +207,11 @@ private:
     }
     
     void printVector(vector<unsigned int> print, string message) {
-        clog << message << "(";
+        clog << message << "";
         for (unsigned int i = 0; i < print.size() - 1; i++) {
             clog << print[i] << ", ";
         }
-        clog << print[print.size()-1] << ")" << endl;
+        clog << print[print.size()-1] << "" << endl;
     }
 
     Solver() {
