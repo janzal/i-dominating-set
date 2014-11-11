@@ -50,17 +50,25 @@
 using namespace std;
 
 struct Graph {
+
+    // pocet uzlu v grafu
     unsigned int size;
-    unsigned int level;
+
+    // i-hodnota
+    unsigned int iVal;
+
+    // 
+    vector<set<unsigned int> > coveredArea;
+
+    // matice incidence
     vector<vector<bool> > matrix;
-    vector<set<unsigned int> > nbhMap;
 };
 
 class Solver {
 public:
-    static Solver* loadGraph(char *fileName, unsigned int level) {
+    static Solver* loadGraph(char *fileName, unsigned int iVal) {
         Solver *solver = new Solver();
-        solver->graph->level = level;
+        solver->graph->iVal = iVal;
         
         clog << "Nacitam graf: " << fileName << endl;
         
@@ -71,7 +79,6 @@ public:
             getline(myfile, line);
             int graphSize = atoi(line.c_str());
             vector< vector<bool> > matrix(graphSize, vector<bool>(graphSize, false));
-            vector< set<unsigned int> > neighbourhoodMap(graphSize);
             int i = 0;
             for (int var = 0; var < graphSize; ++var)
             {
@@ -85,12 +92,14 @@ public:
             }
             solver->graph->size = graphSize;
             solver->graph->matrix = matrix;
-            solver->graph->nbhMap = neighbourhoodMap;
+
+            vector< set<unsigned int> > coveredArea(graphSize);
+            solver->graph->coveredArea = coveredArea;
             myfile.close();
             
-            clog << "Graf nacten ze souboru: " << fileName << endl;
-            clog << "Velikost grafu: " << solver->graph->size << endl;
-            clog << "i = " << level << endl << endl;
+            clog << "Soubor: " << fileName << endl;
+            clog << "Graph size: " << solver->graph->size << endl;
+            clog << "i-value: " << iVal << endl << endl;
 
             return solver;
         }
@@ -98,27 +107,28 @@ public:
     }
     
     void findSolution() {
-        vector< vector<unsigned int> > stack(this->graph->size, vector<unsigned int>(1, 0));
+        this->stack = vector< vector<unsigned int> >(this->graph->size, vector<unsigned int>(1, 0));
         vector<unsigned int> result(graph->size + 1);
         
         //uvodni naplneni zasobniku
         for (unsigned int i = 0; i < graph->size; i++) {
             vector<unsigned int> partialResult(1, i);
-            stack.push_back(partialResult);
+            this->stack.push_back(partialResult);
         }
         cout << "Hledani zacalo...\n\n";
         //hlavni cyklus, prochazi zasobnik
-        while (!stack.empty()) {
-            vector<unsigned int> partialResult = stack.back();
-            stack.pop_back();
+        while (!this->stack.empty()) {
+            vector<unsigned int> nodes = this->stack.back();
+            this->stack.pop_back();
             //otestuj castecne reseni
-            if (partialResult.size() < result.size() && this->testPartialResult(partialResult)) {
-                result = partialResult;
-                this->printVector(partialResult,"Reseni nalezeno: ");
-            } else if (partialResult.size() < (result.size() - 1)) {
+            if (nodes.size() < result.size() && this->isGraphCoveredBy(nodes)) {
+                // ok mame reseni
+                result = nodes;
+                this->printVector(nodes,"Reseni nalezeno: ");
+            } else if (nodes.size() < (result.size() - 1)) {
                 //expanduj castecne reseni tehdy ma-li to smysl
-                this->expandStack(expandPartialResult(partialResult), stack);
-                this->printVector(partialResult,"-> ");
+                this->expandStack(expandPartialResult(nodes));
+                this->printVector(nodes,"res: ");
             }
         }
         
@@ -128,84 +138,125 @@ public:
     }
     
 private:
+
+    vector< vector<unsigned int> > stack;
     
-    /**
-     * Funkce expanduje castecne reseni(vraci potomky tohoto reseni).
-     * Nove castecne reseni se sklada z castecneho reseni,
-     * ktere je doplnene o nove prvky, ktere puvodni neobsahovalo.
-     *
-     * @param partialResult Castecne reseni, ktere rozsirujeme o nove prvky
-     * @param graph Definice grafu
-     * @return Vraci nova castecna reseni
-     */
-    vector< vector<unsigned int> > expandPartialResult(vector<unsigned int> partialResult) {
+
+    vector< vector<unsigned int> > expandPartialResult(vector<unsigned int> nodes) {
         unsigned int max = 0;
-        //najdi maximalni prvek v castecnem reseni
-        for (unsigned int i = 0; i < partialResult.size(); i++) {
-            if (partialResult[i] > max) {
-                max = partialResult[i];
+        //najdi uzel s maximalnim id v nodes
+        for (unsigned int i = 0; i < nodes.size(); i++) {
+            if (nodes[i] > max) {
+                max = nodes[i];
             }
         }
-        //vysledek
-        vector < vector<unsigned int> > expandedResults(this->graph->size - (max + 1));
+
+        //vysledek ktery vratime
+        vector < vector<unsigned int> > result(this->graph->size - (max + 1));
+
         //dopln castecne reseni o nove prvky
         for (unsigned int i = max + 1; i < this->graph->size; i++) {
-            //cout << "roziruji o:" << i << endl;
-            vector<unsigned int> expandedPartialResult = partialResult;
-            expandedPartialResult.push_back(i);
-            expandedResults[i - (max + 1)] = expandedPartialResult;
+            // urcite to bude pokryvat minimalne vstupni nodes
+            vector<unsigned int> tmp = nodes;
+
+            // postupne to tam bude vkladat nody od max do velikosti grafu
+            tmp.push_back(i);
+
+            // pridej celej vector do vectoru vystupnich vektoru
+            result[i - (max + 1)] = tmp;
         }
         
-        return expandedResults;
+        return result;
     }
 
-    /**
-     * Rozsiri zasobnik o nova castecna reseni.
-     *
-     * @param expandedPartialResult Rozsirene castecne reseni
-     * @param stack Reference na globalni zasobnik
-     */
-    void expandStack(vector< vector<unsigned int> > expandedPartialResult, vector< vector<unsigned int> > &stack) {
-        for (unsigned int i = 0; i < expandedPartialResult.size(); i++) {
-            stack.push_back(expandedPartialResult[i]);
-        }
-    }
 
-    bool testPartialResult(vector<unsigned int> partialResult) {
+    bool isGraphCoveredBy(vector<unsigned int> nodes) {
+
+        // pokud bude na konci pres vsechny prvky true, pak nodes jsou resenim problemu
         bool isset[this->graph->size];
         
-        for (unsigned int i = 0; i < partialResult.size(); ++i) {
-            if (this->graph->nbhMap[partialResult[i]].empty()) {
-                set<unsigned int> neighbourhood;
-                this->expandNode(&neighbourhood, partialResult[i], this->graph  ->level);
-                this->graph->nbhMap[partialResult[i]] = neighbourhood;
+        // projdi vsechny uzly v nodes
+        for (unsigned int i = 0; i < nodes.size(); i++) {
+
+            // pokud tento uzel jeste nema urceno co pokryva, zjisti co pokryva
+            if (this->graph->coveredArea[nodes[i]].empty()) {
+                // inicilizace mnoziny
+                set<unsigned int> coveredArea;
+                // expanduj uzel a tim napln mnozinu
+                this->expandNode(&coveredArea, nodes[i], this->graph  ->iVal);
+                // uloz tuto mnozinu pokryti, at ji znova nemusime pocitat
+                this->graph->coveredArea[nodes[i]] = coveredArea;
             }
             set<unsigned int>::iterator it;
-            for(it = graph->nbhMap[partialResult[i]].begin();
-                it != graph->nbhMap[partialResult[i]].end();
+
+            // projdi celou mnozinu pokryti
+            for(it = graph->coveredArea[nodes[i]].begin();
+                it != graph->coveredArea[nodes[i]].end();
                 it++ ) {
+                // a nastav true do kontrolniho pole
                 isset[*it] = true;
             }
         }
         
+        // projdi cele kontrolni pole a zjisti, zda nodes pokryvaji reseni
         for (unsigned int k = 0; k < graph->size; ++k) {
             if (!isset[k]) return false;
         }
+
         return true;
     }
+
+    /*
+        Vlozime do stacku dalsi mozne reseni
+    */
+    void expandStack(vector< vector<unsigned int> > expandedPartialResult) {
+
+        clog << "  Exanding stack from:" << endl;
+        this->printStack("    ");
+        for (unsigned int i = 0; i < expandedPartialResult.size(); i++) {
+            this->stack.push_back(expandedPartialResult[i]);
+        }
+
+        clog << "  To:" << endl;
+        this->printStack("    ");
+    }
+
+    void printStack(string prefix){
+        clog << prefix <<"Stack:" << endl;
+
+        vector< vector<unsigned int> >::iterator it;
+        for(it = this->stack.begin();
+            it != this->stack.end();
+            it++ ) {
+            
+            printVector(*it, "      ");
+        }
+    }
     
-    void expandNode(set<unsigned int> *nbh, unsigned int node, unsigned int currentLevel) {
-        if (currentLevel > 1) {
-            for (unsigned int var = 0; var < this->graph->size; ++var) {
-                if (this->graph->matrix[node][var])
+    /*
+        Metoda, ktera do nbh vlozi vsechny uzly, ktere jsou v currentVal vzdalenosti od uzlu node
+    */
+    void expandNode(set<unsigned int> *nbh, unsigned int node, unsigned int currentVal) {
+
+        if (currentVal > 1) {
+            // zavolej znova expandNode na vsechny sousedici uzly s aktualnim uzlem
+            unsigned int i = 0;
+            while ( i < this->graph->size){
+                // sousedi spolu? pokud ano -> pokracuj sousedem
+                if (this->graph->matrix[node][i])
                 {
-                    this->expandNode(nbh, var, currentLevel - 1);
+                    // sniz uroven dominance o 1
+                    this->expandNode(nbh, i, currentVal - 1);
                 }
+                i++;
             }
         }
+
+        // pridej node do mnoziny sousedu
         nbh->insert(node);
     }
     
+    // vytiskne vektor
     void printVector(vector<unsigned int> print, string message) {
         clog << message << "";
         for (unsigned int i = 0; i < print.size() - 1; i++) {
@@ -214,6 +265,8 @@ private:
         clog << print[print.size()-1] << "" << endl;
     }
 
+
+    // privatni konstruktor
     Solver() {
         this->graph = new Graph();
     }
@@ -228,24 +281,26 @@ int main(int argc, char *argv[]) {
     
     
     if (argc >= 3 &&  argc <= 4)
-    {
+    {  
         Solver *solver = NULL;
         
         char* fileName = argv[argc - 2];
         
-        unsigned int level = atoi(argv[argc - 1]);
-        if (level > 0) {
-            solver = Solver::loadGraph(fileName, level);
+        unsigned int iVal = atoi(argv[argc - 1]);
+
+        if (iVal > 0) {
+            solver = Solver::loadGraph(fileName, iVal);
         } else {
-            cerr << "i neni platne" << endl;
+            cerr << "i neni platne, musi to byt cele cislo > 0" << endl;
             return 1;
         }
         
         if (!solver) {
-            cerr << "Graf neni validni" << endl;
+            cerr << "Graf neni validni, zkontrolujte format souboru" << endl;
             return 1;
         }
         
+        // zahaj vypocet
         solver->findSolution();
         return 0;
         
